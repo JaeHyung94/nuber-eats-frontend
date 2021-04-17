@@ -11,7 +11,6 @@ export const Button: React.FC<IButtonProps> = ({
   loading,
   actionText,
 }) => {
-  console.log(canClick);
   return (
     <button
       className={`mt-3 focus:outline-none py-3 text-white font-medium ${

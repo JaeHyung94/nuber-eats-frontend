@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 import nuberLogo from "../images/logo.svg";
@@ -10,6 +11,8 @@ import {
   LoginMutation,
   LoginMutationVariables,
 } from "../__api__/LoginMutation";
+import { authToken, isLoggedInVar } from "../apollo";
+import { LOCALSTORAGE_TOKEN } from "../constants";
 
 const LOGIN_MUTATION = gql`
   mutation LoginMutation($loginInput: LoginInput!) {
@@ -35,8 +38,10 @@ export const Login = () => {
     const {
       login: { ok, error, token },
     } = data;
-    if (ok) {
-      console.log(token);
+    if (ok && token) {
+      localStorage.setItem(LOCALSTORAGE_TOKEN, token);
+      authToken(token);
+      isLoggedInVar(true);
     } else {
       console.log(error);
     }
@@ -67,9 +72,12 @@ export const Login = () => {
 
   return (
     <div className="h-full flex flex-col items-center mt-8 md:mt-24">
-      <div className="w-full max-w-screen-sm px-4 flex flex-col items-center">
-        <img src={nuberLogo} alt="" className="w-48 mb-10"></img>
-        <h4 className="w-full text-2xl mb-4">돌아오신 것을 환영합니다</h4>
+      <Helmet>
+        <title>Login | Nuber Eats</title>
+      </Helmet>
+      <div className="w-full max-w-screen-sm px-4 md:px-11 flex flex-col items-center">
+        <img src={nuberLogo} alt="" className="w-48 mb-12"></img>
+        <h4 className="w-full text-3xl mb-4">돌아오신 것을 환영합니다</h4>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-3 mt-5 w-full mb-5"
@@ -78,6 +86,10 @@ export const Login = () => {
           <input
             {...register("email", {
               required: "Email is Required",
+              pattern: {
+                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "이메일 형식으로 입력해야 합니다.",
+              },
             })}
             name="email"
             type="email"
