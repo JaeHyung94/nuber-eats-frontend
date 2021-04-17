@@ -1,16 +1,36 @@
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import React from "react";
-import { isLoggedInVar } from "../apollo";
-import { LOCALSTORAGE_TOKEN } from "../constants";
+import { UserRole } from "../__api__/globalTypes";
+import { Restaurants } from "../pages/clients/restaurants";
+import { NotFound } from "../pages/404";
+import { Header } from "../components/header";
+import { useMe } from "../hooks/useMe";
+
+const ClientRoutes = [
+  <Route path="/" exact key="0">
+    <Restaurants></Restaurants>
+  </Route>,
+];
 
 export const LoggedInRouter = () => {
-  const onClick = () => {
-    localStorage.removeItem(LOCALSTORAGE_TOKEN);
-    isLoggedInVar(false);
-  };
+  const { data, loading, error } = useMe();
+
+  if (!data || loading || error) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <span className="font-medium text-xl">Loading...</span>
+      </div>
+    );
+  }
   return (
-    <div>
-      <h1>You are Logged In Now</h1>
-      <button onClick={onClick}>Click to Logout</button>
-    </div>
+    <Router>
+      <Header></Header>
+      <Switch>
+        {data.me.role === UserRole.Client && ClientRoutes}
+        <Route>
+          <NotFound></NotFound>
+        </Route>
+      </Switch>
+    </Router>
   );
 };
