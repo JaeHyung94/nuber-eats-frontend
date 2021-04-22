@@ -7,17 +7,28 @@ import nuberLogo from "../images/logo.svg";
 
 export const Header: React.FC = () => {
   const { data } = useMe();
-  console.log(data);
   return (
-    <header className="py-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <img src={nuberLogo} className="w-24" alt=""></img>
-        <span className="text-xs">
-          <Link to="/my-profile">
-            <FontAwesomeIcon icon={faUser} className="text-lg" />
+    <>
+      {!data?.me.verified && (
+        <div className="bg-red-500 px-2 py-3 text-center text-sm text-white">
+          <span>Please Verify Your Email</span>
+        </div>
+      )}
+      <header className="container mx-auto py-4">
+        <div className="mx-auto flex justify-between items-center">
+          <Link to="/">
+            <img src={nuberLogo} className="w-32" alt=""></img>
           </Link>
-        </span>
-      </div>
-    </header>
+          <span className="text-base">
+            <Link to="/logout">
+              <span>Log out</span>
+            </Link>
+            <Link to="/edit-profile">
+              <FontAwesomeIcon icon={faUser} className="text-xl ml-5" />
+            </Link>
+          </span>
+        </div>
+      </header>
+    </>
   );
 };
