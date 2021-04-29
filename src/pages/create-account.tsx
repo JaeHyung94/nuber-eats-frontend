@@ -13,7 +13,7 @@ import {
   createAccountMutationVariables,
 } from "../__api__/createAccountMutation";
 
-const CREATE_ACCOUNT_MUTATION = gql`
+export const CREATE_ACCOUNT_MUTATION = gql`
   mutation createAccountMutation($createAccountInput: CreateAccountInput!) {
     createAccount(input: $createAccountInput) {
       ok
@@ -43,8 +43,6 @@ export const CreateAccount = () => {
     if (ok) {
       alert("계정이 생성되었습니다! 로그인 해주세요!");
       history.push("/");
-    } else {
-      console.log(error);
     }
   };
   const onError = (error: ApolloError) => {};

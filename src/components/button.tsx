@@ -13,6 +13,7 @@ export const Button: React.FC<IButtonProps> = ({
 }) => {
   return (
     <button
+      role="button"
       className={`mt-3 focus:outline-none py-3 text-white font-medium ${
         !canClick
           ? "bg-gray-300 pointer-events-none"
