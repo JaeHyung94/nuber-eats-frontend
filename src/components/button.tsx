@@ -12,6 +12,7 @@ export const Button: React.FC<IButtonProps> = ({
   actionText,
 }) => {
   return (
+    // eslint-disable-next-line
     <button
       role="button"
       className={`mt-3 focus:outline-none py-3 text-white font-medium ${

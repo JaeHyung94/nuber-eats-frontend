@@ -37,7 +37,7 @@ export const CreateAccount = () => {
   const history = useHistory();
   const onCompleted = (data: createAccountMutation) => {
     const {
-      createAccount: { ok, error },
+      createAccount: { ok },
     } = data;
 
     if (ok) {
@@ -134,8 +134,8 @@ export const CreateAccount = () => {
             ))}
           </select>
           <Button
-            canClick={formState.isValid}
             loading={loading}
+            canClick={formState.isValid}
             actionText={"Create Account"}
           ></Button>
           {createAccountMutationResults?.createAccount.error && (
