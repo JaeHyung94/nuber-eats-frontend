@@ -18,7 +18,7 @@ export const authToken = makeVar(token);
 const wsLink = new WebSocketLink({
   uri:
     process.env.NODE_ENV === "production"
-      ? "https://nuber-eats-backend-jh.herokuapp.com/graphql"
+      ? "wss://nuber-eats-backend-jh.herokuapp.com/graphql"
       : "ws://localhost:4000/graphql",
   options: {
     reconnect: true,
@@ -32,7 +32,7 @@ const httpLink = createHttpLink({
   uri:
     process.env.NODE_ENV === "production"
       ? "https://nuber-eats-backend-jh.herokuapp.com/graphql"
-      : "ws://localhost:4000/graphql",
+      : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
