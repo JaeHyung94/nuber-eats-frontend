@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "CI=false craco build",
     "apollo:codegen": "apollo client:codegen src/__api__ --target=typescript --outputFlat",
     "test": "craco test --verbose",
     "test:cov": "craco test --coverage --watchAll=false",

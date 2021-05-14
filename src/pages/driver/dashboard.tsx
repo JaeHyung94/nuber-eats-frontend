@@ -3,7 +3,7 @@ import GoogleMapReact from "google-map-react";
 import gql from "graphql-tag";
 import { useMutation, useSubscription } from "@apollo/client";
 import { cookedOrders } from "../../__api__/cookedOrders";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { takeOrder, takeOrderVariables } from "../../__api__/takeOrder";
 
 const COOKED_ORDERS_SUBSCRIPTION = gql`
